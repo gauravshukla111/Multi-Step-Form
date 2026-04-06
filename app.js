@@ -117,6 +117,7 @@ document.getElementById('showSidebar').onclick = ()=>{
   sidebar.classList.add('active');
 }
 
+
 function closeSidebar(){
   sidebar.classList.remove('active');
 }
