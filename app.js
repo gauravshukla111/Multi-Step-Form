@@ -47,6 +47,7 @@ function validate(){
   return true;
 }
 
+
 const nameInput = document.getElementById('name');
 const emailInput = document.getElementById('email');
 
