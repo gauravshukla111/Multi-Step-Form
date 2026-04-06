@@ -3,32 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FormForge Pro</title>
+  <title>Responsive Multi-Step Form</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/js/all.min.js"></script>
 </head>
 <body>
 
-<div class="container">
-  <div class="card">
+<div class="wrapper">
 
-    <div class="progress-bar">
+  <!-- FORM -->
+  <div class="form-card">
+
+    <div class="progress-container">
       <div class="progress" id="progress"></div>
     </div>
 
     <form id="form">
 
-      
+      <!-- STEP 1 -->
       <div class="step active">
-        <h2><i class="fa fa-user"></i> Personal Info</h2>
+        <h2>👤 Personal Info</h2>
         <input type="text" id="name" placeholder="Full Name">
         <input type="email" id="email" placeholder="Email">
         <button type="button" class="next">Next</button>
       </div>
 
-      
+      <!-- STEP 2 -->
       <div class="step">
-        <h2><i class="fa fa-lock"></i> Account</h2>
+        <h2>🔐 Account</h2>
         <input type="password" id="password" placeholder="Password">
         <input type="password" id="confirm" placeholder="Confirm Password">
         <div class="buttons">
@@ -37,14 +38,19 @@
         </div>
       </div>
 
-
+      <!-- STEP 3 -->
       <div class="step">
-        <h2><i class="fa fa-code"></i> Skills</h2>
-        <label><input type="checkbox" value="HTML"> HTML</label>
-        <label><input type="checkbox" value="CSS"> CSS</label>
-        <label><input type="checkbox" value="JS"> JavaScript</label>
-        <button type="button" id="addExp">+ Add Experience</button>
+        <h2>💻 Skills</h2>
+
+        <div class="skills-grid">
+          <label class="skill"><input type="checkbox" value="HTML"><span>HTML</span></label>
+          <label class="skill"><input type="checkbox" value="CSS"><span>CSS</span></label>
+          <label class="skill"><input type="checkbox" value="JavaScript"><span>JavaScript</span></label>
+        </div>
+
+        <h3>Experience</h3>
         <div id="experience"></div>
+        <button type="button" id="addExp" class="add-btn">+ Add Experience</button>
 
         <div class="buttons">
           <button type="button" class="prev">Back</button>
@@ -55,14 +61,22 @@
     </form>
   </div>
 
-  
-  <div class="preview" id="preview">
+  <div class="preview-card">
+    <button id="showSidebar" class="view-btn">📂 View Submitted Data</button>
+
     <h3>Live Preview</h3>
-    <p><b>Name:</b> <span id="p_name"></span></p>
-    <p><b>Email:</b> <span id="p_email"></span></p>
-    <p><b>Skills:</b> <span id="p_skills"></span></p>
-    <p><b>Experience:</b> <span id="p_exp"></span></p>
+    <p><b>Name:</b> <span id="p_name">-</span></p>
+    <p><b>Email:</b> <span id="p_email">-</span></p>
+    <p><b>Skills:</b> <span id="p_skills">-</span></p>
+    <p><b>Experience:</b> <span id="p_exp">-</span></p>
   </div>
+
+</div>
+
+<div class="sidebar" id="sidebar">
+  <h3>Submitted Data</h3>
+  <div id="finalData"></div>
+  <button onclick="closeSidebar()">Close</button>
 </div>
 
 <script src="app.js"></script>

@@ -1,69 +1,88 @@
 body {
   margin:0;
-  font-family:sans-serif;
-  background:linear-gradient(135deg,#1e3c72,#2a5298);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-}
-
-.container {
-  display:flex;
-  gap:20px;
-}
-
-
-.card {
-  backdrop-filter: blur(15px);
-  background: rgba(255,255,255,0.1);
-  padding:20px;
-  border-radius:15px;
-  width:320px;
+  font-family: 'Segoe UI', sans-serif;
+  background:#0f172a;
   color:white;
 }
 
-.preview {
-  background:white;
+.wrapper {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:30px;
+  min-height:100vh;
   padding:20px;
-  border-radius:10px;
-  width:250px;
 }
+
+.form-card, .preview-card {
+  background:#1e293b;
+  padding:25px;
+  border-radius:15px;
+  width:320px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+
+.preview-card { background:#111827; }
 
 input {
   width:100%;
-  padding:10px;
+  padding:12px;
   margin:10px 0;
+  border-radius:8px;
   border:none;
-  border-radius:5px;
+  background:#334155;
+  color:white;
 }
 
 button {
-  padding:10px;
+  padding:10px 15px;
   border:none;
-  border-radius:5px;
+  border-radius:8px;
+  background:#22c55e;
   cursor:pointer;
-  background:#00c6ff;
 }
 
-.progress-bar {
+.add-btn { margin-top:10px; width:100%; }
+
+.view-btn {
+  width:100%;
+  margin-bottom:10px;
+  background:#3b82f6;
+}
+
+.skills-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.skill {
+  background:#334155;
+  padding:10px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+}
+.progress-container {
   height:5px;
-  background:#ddd;
-  margin-bottom:15px;
+  background:#334155;
+  margin-bottom:20px;
 }
 
 .progress {
   height:5px;
   width:0%;
-  background:#00c6ff;
-  transition:0.3s;
+  background:#22c55e;
+  transition:0.4s;
 }
 
 .step {
   display:none;
   opacity:0;
-  transform:translateX(50px);
-  transition:0.3s;
+  transform:translateX(40px);
+  transition:0.4s;
 }
 
 .step.active {
@@ -77,6 +96,18 @@ button {
   justify-content:space-between;
 }
 
-@media(max-width:768px){
-  .container{flex-direction:column;}
+.sidebar {
+  position:fixed;
+  right:-350px;
+  top:0;
+  width:300px;
+  height:100%;
+  background:#020617;
+  padding:20px;
+  transition:0.4s;
 }
+
+.sidebar.active { right:0; }
+
+@media(max-width:768px){
+  .wrapper{flex-direction:column;}}
