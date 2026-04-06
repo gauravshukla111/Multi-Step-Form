@@ -61,7 +61,7 @@ function updatePreview(){
   localStorage.setItem('formData', JSON.stringify({name:name.value,email:email.value,skills}));
 }
 
-// Dynamic Experience
+
 const addExp = document.getElementById('addExp');
 const expDiv = document.getElementById('experience');
 
