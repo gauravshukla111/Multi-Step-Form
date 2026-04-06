@@ -82,7 +82,7 @@ addExp.addEventListener('click',()=>{
   input.addEventListener('input', updatePreview);
 });
 
-// Sidebar
+
 const sidebar = document.getElementById('sidebar');
 const finalData = document.getElementById('finalData');
 
@@ -105,7 +105,7 @@ form.addEventListener('submit',(e)=>{
 
   alert('Form Submitted ✅');
 
-  // RESET FORM + PREVIEW
+ 
   form.reset();
   expDiv.innerHTML = '';
   updatePreview();
