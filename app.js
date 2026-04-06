@@ -29,6 +29,7 @@ prevBtns.forEach(btn=>{
   });
 });
 
+
 function validate(){
   const name = document.getElementById('name').value;
   const email = document.getElementById('email').value;
