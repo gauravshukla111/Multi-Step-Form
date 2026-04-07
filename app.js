@@ -1,37 +1,41 @@
 const steps = document.querySelectorAll('.step');
 const nextBtns = document.querySelectorAll('.next');
 const prevBtns = document.querySelectorAll('.prev');
-const progress = document.getElementById('progress');
-const form = document.getElementById('form');
+ const form = document.getElementById('form');
 
-const toastBox = document.getElementById('toast');
-
-const nameInput = document.getElementById('name');
+ const nameInput = document.getElementById('name');
 const emailInput = document.getElementById('email');
 const imageInput = document.getElementById('image');
 
 const previewImg = document.getElementById('p_img');
+const expDiv = document.getElementById('experience');
+const addExp = document.getElementById('addExp');
 
 const finalData = document.getElementById('finalData');
 const sidebar = document.getElementById('sidebar');
 
-const expDiv = document.getElementById('experience');
-const addExp = document.getElementById('addExp');
+const toastBox = document.getElementById('toast');
 
 let current = 0;
-let allData = JSON.parse(localStorage.getItem("formData")) || [];
-let editIndex = -1;
+ let editIndex = -1;
 
-/* STEP CONTROL */
-function showStep(i){
-  steps.forEach((s,idx)=>s.classList.toggle('active', idx===i));
-  progress.style.width = (i/(steps.length-1))*100 + '%';
+/* 🔥 SAFE LOCALSTORAGE FIX */
+let allData;
+try {
+  allData = JSON.parse(localStorage.getItem("formData"));
+  if (!Array.isArray(allData)) allData = [];
+} catch {
+  allData = [];
 }
 
-/* NAVIGATION */
+/* STEP */
+function showStep(i){
+  steps.forEach((s,idx)=>s.classList.toggle('active', idx===i));}
+
+/* NAV */
 nextBtns.forEach(btn=>{
   btn.onclick = ()=>{
-    if(validate()){
+    if(validate()) {
       current++;
       showStep(current);
     }
@@ -45,19 +49,20 @@ prevBtns.forEach(btn=>{
   }
 });
 
-/* VALIDATION (custom) */
-function validate(){
-  const pass = document.getElementById('password').value;
-  const confirm = document.getElementById('confirm').value;
+/* VALIDATION */
 
+ function validate(){
   if(current === 0 && (!nameInput.value || !emailInput.value)){
-    toast('Fill all fields properly');
+    toast("Fill all fields");
     return false;
   }
-
-  if(current === 1 && pass !== confirm){
-    toast('Password mismatch');
-    return false;
+  if(current === 1){
+    const pass = document.getElementById('password').value;
+    const confirm = document.getElementById('confirm').value;
+    if(pass !== confirm){
+      toast("Password mismatch");
+      return false;
+    }
   }
 
   return true;
@@ -70,20 +75,18 @@ function toast(msg){
   setTimeout(()=>toastBox.style.display='none',2000);
 }
 
-/* LIVE PREVIEW */
+/* PREVIEW */
 function updatePreview(){
   document.getElementById('p_name').innerText = nameInput.value || '-';
   document.getElementById('p_email').innerText = emailInput.value || '-';
 
-  let skills = [];
-  document.querySelectorAll('input[type=checkbox]:checked')
-    .forEach(cb=>skills.push(cb.value));
+  let skills = [...document.querySelectorAll('input[type=checkbox]:checked')]
+    .map(cb=>cb.value);
 
   document.getElementById('p_skills').innerText = skills.join(', ') || '-';
 
-  let exp = [];
-  document.querySelectorAll('#experience input')
-    .forEach(e=>exp.push(e.value));
+  let exp = [...expDiv.querySelectorAll('input')]
+    .map(e=>e.value);
 
   document.getElementById('p_exp').innerText = exp.join(', ') || '-';
 }
@@ -92,19 +95,18 @@ document.querySelectorAll('input').forEach(i=>{
   i.addEventListener('input', updatePreview);
 });
 
-/* IMAGE PREVIEW */
-imageInput.addEventListener('change', function(){
-  const file = this.files[0];
-
+/* IMAGE */
+imageInput.onchange = ()=>{
+  const file = imageInput.files[0];
   if(file){
     const reader = new FileReader();
-    reader.onload = function(e){
+    reader.onload = e=>{
       previewImg.src = e.target.result;
       previewImg.style.display = 'block';
     }
     reader.readAsDataURL(file);
   }
-});
+};
 
 /* EXPERIENCE */
 
@@ -113,21 +115,21 @@ addExp.onclick = ()=>{
   const div = document.createElement('div');
 
   const input = document.createElement('input');
-  input.placeholder = 'Experience';
+
 
   const del = document.createElement('button');
   del.innerText = 'x';
-  del.classList.add('del-btn');
+  del.className = 'del-btn';
 
   del.onclick = ()=>{
     div.remove();
-    updatePreview(); // FIXED
+    updatePreview();
   };
 
   div.append(input, del);
   expDiv.appendChild(div);
 
-  input.addEventListener('input', updatePreview);
+  input.oninput = updatePreview;
 };
 
 /* SIDEBAR */
@@ -139,62 +141,66 @@ function closeSidebar(){
   sidebar.classList.remove('active');
 }
 
-/* SAVE LOCAL */
-function saveLocal(){
+/* SAVE */
+function save(){
   localStorage.setItem("formData", JSON.stringify(allData));
 }
 
-/* RENDER DATA */
+/* RENDER */
 function renderData(){
   finalData.innerHTML = '';
 
-  allData.forEach((d, index)=>{
+  allData.forEach((d,i)=>{
     const card = document.createElement('div');
-    card.classList.add('data-card');
+    card.className = 'data-card';
 
     card.innerHTML = `
       ${d.img ? `<img src="${d.img}" width="60">` : ''}
-      <p><b>${d.name}</b></p>
+      <p>${d.name}</p>
       <p>${d.email}</p>
       <p>${d.skills}</p>
       <p>${d.exp}</p>
-      <button onclick="editData(${index})">Edit</button>
-      <button onclick="deleteData(${index})">Delete</button>
+      <button onclick="editData(${i})">Edit</button>
+      <button onclick="deleteData(${i})">Delete</button>
     `;
 
     finalData.appendChild(card);
   });
 
-  saveLocal();
+  save();
 }
 
 /* DELETE */
-function deleteData(index){
-  allData.splice(index,1);
+function deleteData(i){
+  allData.splice(i,1);
   renderData();
 }
 
 /* EDIT */
-function editData(index){
-  const d = allData[index];
-  editIndex = index;
+function editData(i){
+  const d = allData[i];
+  editIndex = i;
 
   nameInput.value = d.name;
   emailInput.value = d.email;
 
   previewImg.src = d.img;
-  previewImg.style.display = 'block';
+  previewImg.style.display = d.img ? 'block' : 'none';
 
   expDiv.innerHTML = '';
-  d.exp.split(',').forEach(e=>{
+  d.exp.split(',').forEach(val=>{
     const div = document.createElement('div');
     const input = document.createElement('input');
-    input.value = e.trim();
+    input.value = val;
 
     const del = document.createElement('button');
     del.innerText = 'x';
-    del.classList.add('del-btn');
-    del.onclick = ()=>{ div.remove(); updatePreview(); };
+    del.className = 'del-btn';
+
+    del.onclick = ()=>{
+      div.remove();
+      updatePreview();
+    };
 
     div.append(input, del);
     expDiv.appendChild(div);
@@ -225,7 +231,6 @@ form.onsubmit = (e)=>{
 
   renderData();
 
-  toast('Saved ✅');
 
   form.reset();
   expDiv.innerHTML = '';
@@ -233,12 +238,10 @@ form.onsubmit = (e)=>{
   previewImg.src = '';
 
   updatePreview();
-
-  current = 0;
-  showStep(0);
+showStep(0);
 };
 
-/* INIT */
+
 renderData();
-showStep(current);
+showStep(0);
 updatePreview();
