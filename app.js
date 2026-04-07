@@ -7,14 +7,14 @@ const form = document.getElementById('form');
 
 let current = 0;
 
-/* STEP CONTROL */
+
 function showStep(i){
   steps.forEach((s,idx)=>s.classList.toggle('active',idx===i));
   circles.forEach((c,idx)=>c.classList.toggle('active',idx<=i));
   progress.style.width = (i/(steps.length-1))*100 + '%';
 }
 
-/* NAVIGATION */
+
 nextBtns.forEach(btn=>{
   btn.onclick=()=>{
     if(validate()){
