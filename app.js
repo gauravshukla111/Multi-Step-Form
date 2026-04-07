@@ -1,4 +1,5 @@
 const steps = document.querySelectorAll('.step');
+const circles = document.querySelectorAll('.circle');
 const nextBtns = document.querySelectorAll('.next');
 const prevBtns = document.querySelectorAll('.prev');
 const progress = document.getElementById('progress');
@@ -6,119 +7,114 @@ const form = document.getElementById('form');
 
 let current = 0;
 
+/* STEP CONTROL */
 function showStep(i){
-  steps.forEach((s,idx)=>{
-    s.classList.toggle('active', idx===i);
-  });
+  steps.forEach((s,idx)=>s.classList.toggle('active',idx===i));
+  circles.forEach((c,idx)=>c.classList.toggle('active',idx<=i));
   progress.style.width = (i/(steps.length-1))*100 + '%';
 }
 
+/* NAVIGATION */
 nextBtns.forEach(btn=>{
-  btn.addEventListener('click',()=>{
+  btn.onclick=()=>{
     if(validate()){
       current++;
       showStep(current);
     }
-  });
+  }
 });
 
 prevBtns.forEach(btn=>{
-  btn.addEventListener('click',()=>{
+  btn.onclick=()=>{
     current--;
     showStep(current);
-  });
+  }
 });
 
-
+/* VALIDATION */
 function validate(){
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
-  const pass = document.getElementById('password').value;
-  const confirm = document.getElementById('confirm').value;
-
-  if(current===0 && (!name || !email)){
-    alert('Fill all fields'); return false;
-  }
+  const pass = password.value;
+  const confirm = confirmPass.value;
 
   if(current===1 && pass !== confirm){
-    alert('Passwords do not match'); return false;
+    toast('Password mismatch');
+    return false;
   }
-
-  return true;
+return true;
 }
 
+/* TOAST */
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.innerText=msg;
+  t.style.display='block';
+  setTimeout(()=>t.style.display='none',2000);
+}
 
-const nameInput = document.getElementById('name');
-const emailInput = document.getElementById('email');
-
+/* LIVE PREVIEW */
 function updatePreview(){
-  document.getElementById('p_name').innerText = nameInput.value || '-';
-  document.getElementById('p_email').innerText = emailInput.value || '-';
+  p_name.innerText = name.value || '-';
+  p_email.innerText = email.value || '-';
 
-  let skills = [];
-  document.querySelectorAll('input[type=checkbox]:checked')
-    .forEach(cb=>skills.push(cb.value));
+  let skills=[...document.querySelectorAll('.tags span')].map(s=>s.innerText);
+  p_skills.innerText = skills.join(', ') || '-';
 
-  document.getElementById('p_skills').innerText = skills.join(', ') || '-';
-
-  let exp = [];
-  document.querySelectorAll('#experience input')
-    .forEach(e=>exp.push(e.value));
-
-  document.getElementById('p_exp').innerText = exp.join(', ') || '-';
+  let exp=[...document.querySelectorAll('#experience input')].map(e=>e.value);
+  p_exp.innerText = exp.join(', ') || '-';
 }
+document.querySelectorAll('input').forEach(i=>i.oninput=updatePreview);
 
-document.querySelectorAll('input').forEach(i=>{
-  i.addEventListener('input', updatePreview);
+/* SKILLS TAG */
+skillInput.addEventListener('keypress',e=>{
+  if(e.key==='Enter'){
+    e.preventDefault();
+    let span=document.createElement('span');
+    span.innerText=skillInput.value;
+    skillsList.appendChild(span);
+    skillInput.value='';
+    updatePreview();
+  }
 });
 
-const addExp = document.getElementById('addExp');
-const expDiv = document.getElementById('experience');
+/* EXPERIENCE */
+addExp.onclick=()=>{
+  let div=document.createElement('div');
+  let input=document.createElement('input');
+  let del=document.createElement('button');
 
-addExp.addEventListener('click',()=>{
-  const input = document.createElement('input');
-  input.placeholder = 'Experience (e.g. 2 years React)';
-  expDiv.appendChild(input);
-  input.addEventListener('input', updatePreview);
-});
+  del.innerText='x';
+  del.onclick=()=>div.remove();
 
+  div.append(input,del);
+  experience.appendChild(div);
 
-const sidebar = document.getElementById('sidebar');
-const finalData = document.getElementById('finalData');
+  input.oninput=updatePreview;
+};
 
-form.addEventListener('submit',(e)=>{
+/* SIDEBAR */
+showSidebar.onclick=()=>sidebar.classList.add('active');
+function closeSidebar(){sidebar.classList.remove('active')}
+
+/* SUBMIT */
+form.onsubmit=e=>{
   e.preventDefault();
-
-  const data = {
-    name:nameInput.value,
-    email:emailInput.value,
-    skills:document.getElementById('p_skills').innerText,
-    exp:document.getElementById('p_exp').innerText
-  };
-
+  
   finalData.innerHTML = `
-    <p><b>Name:</b> ${data.name}</p>
-    <p><b>Email:</b> ${data.email}</p>
-    <p><b>Skills:</b> ${data.skills}</p>
-    <p><b>Experience:</b> ${data.exp}</p>
+    <p>${name.value}</p>
+    <p>${email.value}</p>
+    <p>${p_skills.innerText}</p>
+    <p>${p_exp.innerText}</p>
   `;
 
-  alert('Form Submitted ✅');
+  toast('Submitted ✅');
 
- 
   form.reset();
-  expDiv.innerHTML = '';
+  skillsList.innerHTML='';
+  experience.innerHTML='';
   updatePreview();
-  current = 0;
-  showStep(current);
-});
-
-document.getElementById('showSidebar').onclick = ()=>{
-  sidebar.classList.add('active');}
-
-function closeSidebar(){
-  sidebar.classList.remove('active');
-}
+  current=0;
+  showStep(0);
+};
 
 showStep(current);
 updatePreview();
