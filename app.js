@@ -32,6 +32,7 @@ prevBtns.forEach(btn=>{
 });
 
 /* VALIDATION */
+
 function validate(){
   const pass = password.value;
   const confirm = confirmPass.value;
@@ -52,6 +53,7 @@ function toast(msg){
 }
 
 /* LIVE PREVIEW */
+
 function updatePreview(){
   p_name.innerText = name.value || '-';
   p_email.innerText = email.value || '-';
