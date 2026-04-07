@@ -78,7 +78,7 @@ skillInput.addEventListener('keypress',e=>{
   }
 });
 
-/* EXPERIENCE */
+
 addExp.onclick=()=>{
   let div=document.createElement('div');
   let input=document.createElement('input');
