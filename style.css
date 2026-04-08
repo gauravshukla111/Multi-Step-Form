@@ -88,7 +88,7 @@ button{
 .step{display:none;}
 .step.active{display:block;}
 
-/* SIDEBAR */
+/* sidebar */
 .sidebar{
   position:fixed;
   right:-350px;

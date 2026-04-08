@@ -32,7 +32,7 @@ try {
 function showStep(i){
   steps.forEach((s,idx)=>s.classList.toggle('active', idx===i));}
 
-/* NAV */
+
 nextBtns.forEach(btn=>{
   btn.onclick = ()=>{
     if(validate()) {
