@@ -3,7 +3,7 @@ const nextBtns = document.querySelectorAll('.next');
 const prevBtns = document.querySelectorAll('.prev');
  const form = document.getElementById('form');
 
- const nameInput = document.getElementById('name');
+const nameInput = document.getElementById('name');
 const emailInput = document.getElementById('email');
 const imageInput = document.getElementById('image');
 

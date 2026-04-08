@@ -101,6 +101,7 @@ button{
   padding:20px;
   transition:0.4s;
 }
+
 .sidebar.active{right:0}
 
 .data-card{
