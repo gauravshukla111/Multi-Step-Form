@@ -28,7 +28,7 @@ try {
   allData = [];
 }
 
-/* STEP */
+
 function showStep(i){
   steps.forEach((s,idx)=>s.classList.toggle('active', idx===i));}
 
