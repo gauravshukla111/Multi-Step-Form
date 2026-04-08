@@ -5,6 +5,7 @@ body{
   color:white;
 }
 
+
 .wrapper{
   display:flex;
   gap:30px;
@@ -52,7 +53,7 @@ body{
   color:#22c55e;
 }
 
-/* EXPERIENCE FIX */
+
 #experience div{
   display:flex;
   gap:8px;
@@ -83,7 +84,7 @@ button{
   width:0%;
 }
 
-/* STEP */
+
 .step{display:none;}
 .step.active{display:block;}
 

@@ -19,7 +19,7 @@ const toastBox = document.getElementById('toast');
 let current = 0;
  let editIndex = -1;
 
-/* 🔥 SAFE LOCALSTORAGE FIX */
+/* LOCALSTORAGE */
 let allData;
 try {
   allData = JSON.parse(localStorage.getItem("formData"));
