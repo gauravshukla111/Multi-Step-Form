@@ -91,6 +91,7 @@ button{
 .step.active{display:block;}
 
 /* sidebar */ 
+
 .sidebar{
   position:fixed;
   right:-350px;
@@ -100,6 +101,7 @@ button{
   background:#020617;
   padding:20px;
   transition:0.4s;
+  overflow-y:auto; 
 }
 
 .sidebar.active{right:0}

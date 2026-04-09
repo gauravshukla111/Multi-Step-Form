@@ -1,7 +1,7 @@
 const steps = document.querySelectorAll('.step');
 const nextBtns = document.querySelectorAll('.next');
 const prevBtns = document.querySelectorAll('.prev');
- const form = document.getElementById('form');
+const form = document.getElementById('form');
 
 const nameInput = document.getElementById('name');
 const emailInput = document.getElementById('email');
@@ -30,35 +30,47 @@ try {
 
 
 function showStep(i){
-  steps.forEach((s,idx)=>s.classList.toggle('active', idx===i));}
 
+  if(i < 0) i = 0;
+  if(i >= steps.length) i = steps.length - 1;
 
+  current = i;
+
+  steps.forEach((s,idx)=>s.classList.toggle('active', idx===i));
+}
+
+/* nav */
 nextBtns.forEach(btn=>{
   btn.onclick = ()=>{
     if(validate()) {
-      current++;
-      showStep(current);
+      if(current < steps.length - 1){  // ✅ FIX
+        current++;
+        showStep(current);
+      }
     }
   }
 });
 
 prevBtns.forEach(btn=>{
   btn.onclick = ()=>{
-    current--;
-    showStep(current);
+    if(current > 0){  // ✅ FIX
+      current--;
+      showStep(current);
+    }
   }
 });
 
 /* validation */
-
- function validate(){
+function validate(){
   if(current === 0 && (!nameInput.value || !emailInput.value)){
     toast("Fill all fields");
     return false;
   }
+
   if(current === 1){
     const pass = document.getElementById('password').value;
     const confirm = document.getElementById('confirm').value;
+
     if(pass !== confirm){
       toast("Password mismatch");
       return false;
@@ -95,7 +107,7 @@ document.querySelectorAll('input').forEach(i=>{
   i.addEventListener('input', updatePreview);
 });
 
-/* image */
+/* imnage */
 imageInput.onchange = ()=>{
   const file = imageInput.files[0];
   if(file){
@@ -108,18 +120,17 @@ imageInput.onchange = ()=>{
   }
 };
 
-/* experience */
-
-
+/* experience*/
 addExp.onclick = ()=>{
   const div = document.createElement('div');
 
   const input = document.createElement('input');
-
+  input.placeholder = "Experience";
 
   const del = document.createElement('button');
   del.innerText = 'x';
   del.className = 'del-btn';
+  del.type = "button";
 
   del.onclick = ()=>{
     div.remove();
@@ -146,7 +157,7 @@ function save(){
   localStorage.setItem("formData", JSON.stringify(allData));
 }
 
-/*render*/
+/* render */
 function renderData(){
   finalData.innerHTML = '';
 
@@ -160,8 +171,9 @@ function renderData(){
       <p>${d.email}</p>
       <p>${d.skills}</p>
       <p>${d.exp}</p>
-      <button onclick="editData(${i})">Edit</button>
-      <button onclick="deleteData(${i})">Delete</button>
+
+      <button type="button" onclick="editData(${i})">Edit</button>
+      <button type="button" onclick="deleteData(${i})">Delete</button>
     `;
 
     finalData.appendChild(card);
@@ -188,14 +200,17 @@ function editData(i){
   previewImg.style.display = d.img ? 'block' : 'none';
 
   expDiv.innerHTML = '';
+
   d.exp.split(',').forEach(val=>{
     const div = document.createElement('div');
+
     const input = document.createElement('input');
-    input.value = val;
+    input.value = val.trim();
 
     const del = document.createElement('button');
     del.innerText = 'x';
     del.className = 'del-btn';
+    del.type = "button";
 
     del.onclick = ()=>{
       div.remove();
@@ -208,6 +223,9 @@ function editData(i){
 
   updatePreview();
   closeSidebar();
+
+  current = 0;       
+  showStep(0);
 }
 
 /* submit */
@@ -238,7 +256,9 @@ form.onsubmit = (e)=>{
   previewImg.src = '';
 
   updatePreview();
-showStep(0);
+
+  current = 0;     
+  showStep(0);
 };
 
 
