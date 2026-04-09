@@ -17,8 +17,7 @@ const sidebar = document.getElementById('sidebar');
 const toastBox = document.getElementById('toast');
 
 let current = 0;
- let editIndex = -1;
- 
+let editIndex = -1;
 
 /* localstorage */
 let allData;
@@ -50,7 +49,7 @@ prevBtns.forEach(btn=>{
   }
 });
 
-/* VALIDATION */
+/* validation */
 
  function validate(){
   if(current === 0 && (!nameInput.value || !emailInput.value)){
@@ -69,14 +68,14 @@ prevBtns.forEach(btn=>{
   return true;
 }
 
-/* TOAST */
+/* toast */
 function toast(msg){
   toastBox.innerText = msg;
   toastBox.style.display = 'block';
   setTimeout(()=>toastBox.style.display='none',2000);
 }
 
-/* PREVIEW */
+/* preview */
 function updatePreview(){
   document.getElementById('p_name').innerText = nameInput.value || '-';
   document.getElementById('p_email').innerText = emailInput.value || '-';
@@ -96,7 +95,7 @@ document.querySelectorAll('input').forEach(i=>{
   i.addEventListener('input', updatePreview);
 });
 
-/* IMAGE */
+/* image */
 imageInput.onchange = ()=>{
   const file = imageInput.files[0];
   if(file){
@@ -133,7 +132,7 @@ addExp.onclick = ()=>{
   input.oninput = updatePreview;
 };
 
-/* SIDEBAR */
+/* sidebar */
 document.getElementById('showSidebar').onclick = ()=>{
   sidebar.classList.add('active');
 };
@@ -142,12 +141,12 @@ function closeSidebar(){
   sidebar.classList.remove('active');
 }
 
-/* SAVE */
+/* save */
 function save(){
   localStorage.setItem("formData", JSON.stringify(allData));
 }
 
-/* RENDER */
+/*render*/
 function renderData(){
   finalData.innerHTML = '';
 
