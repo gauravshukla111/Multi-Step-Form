@@ -228,7 +228,7 @@ function editData(i){
   showStep(0);
 }
 
-/* submit */
+/* submit button */
 form.onsubmit = (e)=>{
   e.preventDefault();
 
