@@ -170,13 +170,13 @@ function renderData(){
   save();
 }
 
-/* DELETE */
+/* delete */
 function deleteData(i){
   allData.splice(i,1);
   renderData();
 }
 
-/* EDIT */
+/* edit */
 function editData(i){
   const d = allData[i];
   editIndex = i;
@@ -210,7 +210,7 @@ function editData(i){
   closeSidebar();
 }
 
-/* SUBMIT */
+/* submit */
 form.onsubmit = (e)=>{
   e.preventDefault();
 
