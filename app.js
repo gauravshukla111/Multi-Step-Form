@@ -108,7 +108,7 @@ imageInput.onchange = ()=>{
   }
 };
 
-/* EXPERIENCE */
+/* experience */
 
 
 addExp.onclick = ()=>{
