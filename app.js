@@ -20,6 +20,7 @@ let current = 0;
 let editIndex = -1;
 
 /* localstorage */
+
 let allData;
 try {
   allData = JSON.parse(localStorage.getItem("formData"));
@@ -60,12 +61,13 @@ prevBtns.forEach(btn=>{
   }
 });
 
-/* validation */
+/* form validation logic */
 function validate(){
   if(current === 0 && (!nameInput.value || !emailInput.value)){
     toast("Fill all fields");
     return false;
   }
+
 
   if(current === 1){
     const pass = document.getElementById('password').value;
@@ -182,13 +184,13 @@ function renderData(){
   save();
 }
 
-/* delete */
+/* delete button logic */
 function deleteData(i){
   allData.splice(i,1);
   renderData();
 }
 
-/* edit */
+/* edit button logic */
 function editData(i){
   const d = allData[i];
   editIndex = i;

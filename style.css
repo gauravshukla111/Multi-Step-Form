@@ -114,11 +114,12 @@ button{
 }
 
 
-/* toast */
+
 #toast{
   position:fixed;
   top:20px;
   right:20px;
   background:#22c55e;
   padding:10px;
-  display:none;}
+  display:none;
+}
