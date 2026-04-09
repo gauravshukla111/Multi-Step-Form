@@ -18,6 +18,7 @@ const toastBox = document.getElementById('toast');
 
 let current = 0;
  let editIndex = -1;
+ 
 
 /* localstorage */
 let allData;

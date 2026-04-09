@@ -45,7 +45,7 @@ body{
   padding:0 5px;
 }
 
-/* FIXED */
+
 .input-group input:focus + label,
 .input-group input:not(:placeholder-shown) + label{
   top:0px;
@@ -79,7 +79,7 @@ button{
   cursor:pointer;
 }
 
-/* progress */
+/* progress */ 
 .progress{
   height:5px;
   background:#22c55e;
@@ -90,7 +90,7 @@ button{
 .step{display:none;}
 .step.active{display:block;}
 
-/* sidebar */
+/* sidebar */ 
 .sidebar{
   position:fixed;
   right:-350px;
