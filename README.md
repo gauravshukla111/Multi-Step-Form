@@ -30,13 +30,6 @@ It allows users to enter data step-by-step, preview it live, and store it in the
 
 ---
 
-## 🎬 Demo GIF (Add your own)
-
-![Demo](https://via.placeholder.com/800x400.gif?text=Add+Your+Project+GIF+Here)
-
-👉 Replace this with your actual screen recording GIF (use ScreenToGif / OBS)
-
----
 
 ## 🛠️ Tech Stack
 
@@ -80,10 +73,6 @@ cd multi-step-form
 open index.html
 ```
 
-## Author - Gaurav Shukla
-- Animated GIF preview
-- Real screenshots
-- Advanced badges
-- Clean portfolio-style README
+---
 
-👉 Just tell me, I’ll upgrade this into a **killer README that stands out to recruiters**
+## Author - **Gaurav Shukla*
